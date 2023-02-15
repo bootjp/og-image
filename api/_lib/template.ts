@@ -21,6 +21,7 @@ function getCss(theme: string, fontSize: string) {
         radial = 'dimgray';
     }
     return `
+    @import url(//fonts.googleapis.com/earlyaccess/notosansjp.css);
     @font-face {
         font-family: 'Inter';
         font-style:  normal;
