@@ -8,6 +8,10 @@ const puppeteer = require("puppeteer-core");
 let _browser :Browser;
 
 async function getPage() {
+  if (_browser != null) {
+    return await _browser.newPage()
+  }
+
   const browser = await puppeteer.launch({
     // args: chromium.args,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -15,10 +19,7 @@ async function getPage() {
     executablePath: await chromium.executablePath(),
     headless: chromium.headless,
   });
-  if (_browser != null) {
-    return await _browser.newPage()
-  }
-  _browser = browser.newPage();
+  _browser = browser;
 
   return await _browser.newPage()
 }
