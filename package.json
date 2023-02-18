@@ -7,8 +7,7 @@
     "start": "npm run build:live",
     "build": "tsc -p api/tsconfig.json",
     "build:live": "nodemon --watch 'api/**/*.ts' --exec \"ts-node\" api/index.ts",
-    "build-web": "tsc -p web/tsconfig.json",
-    "copy-files": "mkdir -p api/dist/_fonts && cp api/_fonts/* api/dist/_fonts"
+    "build-web": "tsc -p web/tsconfig.json"
   },
   "dependencies": {
     "@sparticuz/chromium": "^110.0.1",
