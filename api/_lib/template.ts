@@ -16,17 +16,22 @@ function getCss(theme: string, fontSize: string) {
         radial = 'dimgray';
     }
     return `
-    @import url(https:///fonts.googleapis.com/earlyaccess/notosansjp.css);
-
-    body {
-        background: ${background};
-        background-image: radial-gradient(circle at 25px 25px, ${radial} 2%, transparent 0%), radial-gradient(circle at 75px 75px, ${radial} 2%, transparent 0%);
-        background-size: 100px 100px;
-        height: 100vh;
-        display: flex;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900');
+ 
+    body{
+      font-family: 'Noto Sans JP', sans-serif;
+      padding: 0;
+      margin: 0;
+      font-size: 30px;
+      text-align: center;
+      background: ${background};
+      background-image: radial-gradient(circle at 25px 25px, ${radial} 2%, transparent 0%), radial-gradient(circle at 75px 75px, ${radial} 2%, transparent 0%);
+      background-size: 100px 100px;
+      height: 100vh;
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
     }
 
     code {
