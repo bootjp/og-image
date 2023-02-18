@@ -1,61 +1,38 @@
 
-import { readFileSync } from 'fs';
 import { sanitizeHtml } from './sanitizer';
 import { ParsedRequest } from './types';
 const twemoji = require('twemoji');
 const twOptions = { folder: 'svg', ext: '.svg' };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 
-const rglr = readFileSync(`${__dirname}/../_fonts/Inter-Regular.woff2`).toString('base64');
-const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString('base64');
-const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString('base64');
-
 function getCss(theme: string, fontSize: string) {
     let background = 'white';
     let foreground = 'black';
-    let radial = 'lightgray';
 
     if (theme === 'dark') {
         background = 'black';
         foreground = 'white';
-        radial = 'dimgray';
     }
     return `
-    @font-face {
-        font-family: 'Inter';
-        font-style:  normal;
-        font-weight: normal;
-        src: url(data:font/woff2;charset=utf-8;base64,${rglr}) format('woff2');
-    }
-
-    @font-face {
-        font-family: 'Inter';
-        font-style:  normal;
-        font-weight: bold;
-        src: url(data:font/woff2;charset=utf-8;base64,${bold}) format('woff2');
-    }
-
-    @font-face {
-        font-family: 'Vera';
-        font-style: normal;
-        font-weight: normal;
-        src: url(data:font/woff2;charset=utf-8;base64,${mono})  format("woff2");
-      }
-
-    body {
-        background: ${background};
-        background-image: radial-gradient(circle at 25px 25px, ${radial} 2%, transparent 0%), radial-gradient(circle at 75px 75px, ${radial} 2%, transparent 0%);
-        background-size: 100px 100px;
-        height: 100vh;
-        display: flex;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900');
+ 
+    body{
+      font-family: 'Noto Sans JP', sans-serif;
+      padding: 0;
+      margin: 50px;
+      text-align: center;
+      background: ${background};
+      background-size: 100px 100px;
+      height: 100vh;
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
     code {
         color: #D400FF;
-        font-family: 'Vera';
         white-space: pre-wrap;
         letter-spacing: -5px;
     }
@@ -78,12 +55,10 @@ function getCss(theme: string, fontSize: string) {
 
     .plus {
         color: #BBB;
-        font-family: Times New Roman, Verdana;
-        font-size: 100px;
     }
 
     .spacer {
-        margin: 150px;
+        margin: 100px 0;
     }
 
     .emoji {
@@ -94,23 +69,24 @@ function getCss(theme: string, fontSize: string) {
     }
     
     .heading {
-        font-family: 'Inter', sans-serif;
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
         color: ${foreground};
         line-height: 1.8;
-    }`;
+    }
+    .description {
+        font-size: 28px;
+        font-style: normal;
+        color: ${foreground};
+        line-height: 1.8;
+    }
+    `;
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { text, theme, md, fontSize, images, widths, heights } = parsedReq;
-    let html = sanitizeHtml(text);
-    if (md) {
-        html = html.replace(/\*\*(.+)\*\*/g, (_, match) => `<b>${match}</b>`)
-        html = html.replace(/__(.+)__/g, (_, match) => `<b>${match}</b>`)
-        html = html.replace(/\*(.+)\*/g, (_, match) => `<i>${match}</i>`)
-        html = html.replace(/_(.+)_/g, (_, match) => `<i>${match}</i>`)
-    }
+    const { title, description, theme, fontSize, images, widths, heights } = parsedReq;
+    let s_title = sanitizeHtml(title);
+    let s_description = sanitizeHtml(description);
     return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
@@ -122,13 +98,17 @@ export function getHtml(parsedReq: ParsedRequest) {
     <body>
         <div>
             <div class="spacer">
-            <div class="logo-wrapper">
+              <div class="logo-wrapper">
                 ${images.map((img, i) =>
                     getPlusSign(i) + getImage(img, widths[i], heights[i])
                 ).join('')}
+              </div>
             </div>
             <div class="spacer">
-            <div class="heading">${emojify(html)}
+              <div class="heading">${emojify(s_title)}
+            </div>
+            <div class="spacer">
+              <div class="description">${emojify(s_description)}
             </div>
         </div>
     </body>
