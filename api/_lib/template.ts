@@ -32,6 +32,7 @@ function getCss(theme: string, fontSize: string) {
       text-align: center;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
 
     code {
