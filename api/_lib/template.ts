@@ -1,14 +1,9 @@
 
-import { readFileSync } from 'fs';
 import { sanitizeHtml } from './sanitizer';
 import { ParsedRequest } from './types';
 const twemoji = require('twemoji');
 const twOptions = { folder: 'svg', ext: '.svg' };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
-
-const rglr = readFileSync(`${__dirname}/../_fonts/Inter-Regular.woff2`).toString('base64');
-const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString('base64');
-const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString('base64');
 
 function getCss(theme: string, fontSize: string) {
     let background = 'white';
@@ -21,27 +16,7 @@ function getCss(theme: string, fontSize: string) {
         radial = 'dimgray';
     }
     return `
-    @import url(//fonts.googleapis.com/earlyaccess/notosansjp.css);
-    @font-face {
-        font-family: 'Inter';
-        font-style:  normal;
-        font-weight: normal;
-        src: url(data:font/woff2;charset=utf-8;base64,${rglr}) format('woff2');
-    }
-
-    @font-face {
-        font-family: 'Inter';
-        font-style:  normal;
-        font-weight: bold;
-        src: url(data:font/woff2;charset=utf-8;base64,${bold}) format('woff2');
-    }
-
-    @font-face {
-        font-family: 'Vera';
-        font-style: normal;
-        font-weight: normal;
-        src: url(data:font/woff2;charset=utf-8;base64,${mono})  format("woff2");
-      }
+    @import url(https:///fonts.googleapis.com/earlyaccess/notosansjp.css);
 
     body {
         background: ${background};
@@ -56,7 +31,7 @@ function getCss(theme: string, fontSize: string) {
 
     code {
         color: #D400FF;
-        font-family: 'Vera';
+        font-family: 'Noto Sans JP',
         white-space: pre-wrap;
         letter-spacing: -5px;
     }
@@ -79,7 +54,7 @@ function getCss(theme: string, fontSize: string) {
 
     .plus {
         color: #BBB;
-        font-family: Times New Roman, Verdana;
+        font-family: 'Noto Sans JP',
         font-size: 100px;
     }
 
@@ -95,7 +70,7 @@ function getCss(theme: string, fontSize: string) {
     }
     
     .heading {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Noto Sans JP',
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
         color: ${foreground};
