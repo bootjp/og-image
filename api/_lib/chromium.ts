@@ -1,7 +1,11 @@
 import {FileType} from './types';
+import {Browser} from "puppeteer";
 
 const chromium = require("@sparticuz/chromium");
 const puppeteer = require("puppeteer-core");
+
+// cache browser
+let _browser :Browser;
 
 async function getPage() {
   const browser = await puppeteer.launch({
@@ -11,7 +15,12 @@ async function getPage() {
     executablePath: await chromium.executablePath(),
     headless: chromium.headless,
   });
-  return await browser.newPage();
+  if (_browser != null) {
+    return await _browser.newPage()
+  }
+  _browser = browser.newPage();
+
+  return await _browser.newPage()
 }
 
 export async function getScreenshot(html: string, type: FileType) {
