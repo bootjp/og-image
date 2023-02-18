@@ -84,19 +84,9 @@ function getCss(theme: string, fontSize: string) {
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { title, description, theme, md, fontSize, images, widths, heights } = parsedReq;
+    const { title, description, theme, fontSize, images, widths, heights } = parsedReq;
     let s_title = sanitizeHtml(title);
     let s_description = sanitizeHtml(description);
-    if (md) {
-        s_title = s_title.replace(/\*\*(.+)\*\*/g, (_, match) => `<b>${match}</b>`)
-        s_title = s_title.replace(/__(.+)__/g, (_, match) => `<b>${match}</b>`)
-        s_title = s_title.replace(/\*(.+)\*/g, (_, match) => `<i>${match}</i>`)
-        s_title = s_title.replace(/_(.+)_/g, (_, match) => `<i>${match}</i>`)
-        s_description = s_description.replace(/\*\*(.+)\*\*/g, (_, match) => `<b>${match}</b>`)
-        s_description = s_description.replace(/__(.+)__/g, (_, match) => `<b>${match}</b>`)
-        s_description = s_description.replace(/\*(.+)\*/g, (_, match) => `<i>${match}</i>`)
-        s_description = s_description.replace(/_(.+)_/g, (_, match) => `<i>${match}</i>`)
-    }
     return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">

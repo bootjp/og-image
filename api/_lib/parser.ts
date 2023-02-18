@@ -3,9 +3,12 @@ import { parse } from 'url';
 import { ParsedRequest } from './types';
 
 export function parseRequest(req: IncomingMessage) {
+    if (!req.url) {
+        throw new Error('Require url');
+    }
     console.log('HTTP ' + req.url);
-    const { query } = parse(req.url || '/', true);
-    const { fontSize, images, widths, heights, theme, md, title, description, ext } = (query || {});
+    const { query } = parse(req.url, true);
+    const { fontSize, images, widths, heights, theme, title, description, ext } = (query || {});
 
     if (Array.isArray(fontSize)) {
         throw new Error('Expected a single fontSize');
@@ -20,7 +23,6 @@ export function parseRequest(req: IncomingMessage) {
         title: decodeURIComponent(typeof title === "string" ? title : ""),
         description: decodeURIComponent(typeof description === "string" ? description : ""),
         theme: theme === 'dark' ? 'dark' : 'light',
-        md: md === '1' || md === 'true',
         fontSize: fontSize || '96px',
         images: getArray(images),
         widths: getArray(widths),

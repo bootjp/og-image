@@ -3,12 +3,9 @@ import {FileType} from './types';
 const chromium = require("@sparticuz/chromium");
 const puppeteer = require("puppeteer-core");
 
-
 async function getPage() {
   const browser = await puppeteer.launch({
-    // args: chromium.args,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-
     executablePath: await chromium.executablePath(),
     headless: chromium.headless,
   });
