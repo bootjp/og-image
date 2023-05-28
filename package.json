@@ -10,7 +10,7 @@
     "build-web": "tsc -p web/tsconfig.json"
   },
   "dependencies": {
-    "@sparticuz/chromium": "^110.0.1",
+    "@sparticuz/chromium": "^113.0.0",
     "puppeteer-core": "19.7.1",
     "twemoji": "14.0.2"
   },
