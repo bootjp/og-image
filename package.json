@@ -1,7 +1,7 @@
 {
   "private": true,
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   },
   "scripts": {
     "start": "npm run build:live",
@@ -15,7 +15,7 @@
     "twemoji": "14.0.2"
   },
   "devDependencies": {
-    "@types/node": "^18.13.0",
+    "@types/node": "^20.0.0",
     "@types/puppeteer": "5.4.7",
     "@types/puppeteer-core": "5.4.0",
     "nodemon": "^2.0.20",
